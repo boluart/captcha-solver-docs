@@ -1,0 +1,13 @@
+{
+  "label": "API Sunedu",
+  "position": 2,
+  "link": {
+    "type": "generated-index",
+    "description": "En esta sección encontrarás una lista de todos las apis que ponemos a tu disposición para que puedas integrarte con nosotros. Puedes encontrar la documentación de cada una de ellas, así como enlaces a los entornos de prueba y producción.",
+    "slug": "/sunedu",
+    "keywords": ["productos", "documentación", "enlaces"],
+    "title": "API Sunedu"
+
+  }
+
+}

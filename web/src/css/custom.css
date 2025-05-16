@@ -1,0 +1,68 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #47a6e1;
+  --ifm-color-primary-dark: #2e9add;
+  --ifm-color-primary-darker: #2393d8;
+  --ifm-color-primary-darkest: #1d79b2;
+  --ifm-color-primary-light: #60b2e5;
+  --ifm-color-primary-lighter: #6db8e7;
+  --ifm-color-primary-lightest: #93cbed;
+}
+
+.docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.1);
+  display: block;
+  margin: 0 calc(-1 * var(--ifm-pre-padding));
+  padding: 0 var(--ifm-pre-padding);
+}
+
+html[data-theme="dark"] .docusaurus-highlight-code-line {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+
+
+
+html[data-theme='dark'] .navbar-icon-link {
+  filter: invert(100%); /* modo oscuro */
+}
+
+.navbar-icon-link::before {
+  filter: invert(0%); /* modo claro */
+  display: inline-block;
+  content: '';
+  width: 25px;
+  height: 25px;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.navbar-icon-link[aria-label="Facebook"]::before {
+  background-image: url('/img/icons/facebook.svg');
+}
+
+.navbar-icon-link[aria-label="YouTube"]::before {
+  background-image: url('/img/icons/youtube.svg');
+}
+
+.navbar-icon-link[aria-label="GitHub"]::before {
+  background-image: url('/img/icons/github.svg');
+}
+
+.navbar-icon-link[aria-label="Instagram"]::before {
+  background-image: url('/img/icons/instagram.svg');
+}
+
+.navbar-icon-link[aria-label="Linkedin"]::before {
+  background-image: url('/img/icons/linkedin.svg');
+}
+
+.navbar-icon-link[aria-label="Whatsapp"]::before {
+  background-image: url('/img/icons/whatsapp.svg');
+}

@@ -1,0 +1,928 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API HAKEBot",
+    "description": "Esta API proporciona un conjunto de servicios para resolver captchas, gestionar expedientes académicos, verificar información fiscal y rastrear datos de matriculación de vehículos. Está diseñada para ayudar a los desarrolladores a integrar estas funcionalidades en sus aplicaciones de forma eficiente.",
+    "version": "1.0.0",
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "servers": [
+    {
+      "description": "Servidor de API de captcha",
+      "url": "https://api.hakebot.com/"
+    },
+    {
+      "description": "Servidor de API de SUNEDU",
+      "url": "https://api.hakebot.com/"
+    }
+  ],
+  "paths": {
+    "/captcha/v1/simple": {
+      "post": {
+        "summary": "Captcha simple",
+        "operationId": "captchaSimple",
+        "tags": [
+          "ByeCaptcha"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CaptchaRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Captcha resuelto de manera exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CaptchaResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parámetros de solicitud no válidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRespuesta"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error Interno del Servidor  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRespuesta"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sunedu/v1/solicitud": {
+      "post": {
+        "summary": "Crea solicitud",
+        "operationId": "crearSolicitudSunedu",
+        "tags": [
+          "Sunedu"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SuneduRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Generación de solicitud exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SuneduRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BaseRequest"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parámetros de solicitud no válidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRespuesta"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error Interno del Servidor  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRespuesta"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Error al invocación de recurso externo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRespuesta"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sunedu/v1/solicitud/{idSolicitud}": {
+      "get": {
+        "summary": "Obtiene resultado",
+        "operationId": "obtenerSolicitudSunedu",
+        "tags": [
+          "Sunedu"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Path-idSolicitud"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta de solicitud exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SuneduRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BaseRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ExtraRequest"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "Resultado": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/SuneduResponse"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parámetros de solicitud no válidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRespuesta"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error Interno del Servidor  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRespuesta"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Error al invocación de recurso externo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRespuesta"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sunat/v1/solicitud": {
+      "post": {
+        "summary": "Crea solicitud",
+        "operationId": "crearSolicitudSunat",
+        "tags": [
+          "Sunat"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SunatRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Generación de solicitud exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SunatRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BaseRequest"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parámetros de solicitud no válidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRespuesta"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error Interno del Servidor  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRespuesta"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Error al invocación de recurso externo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRespuesta"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sunat/v1/solicitud/{idSolicitud}": {
+      "get": {
+        "summary": "Obtiene resultado",
+        "operationId": "obtenerSolicitudSunedu",
+        "tags": [
+          "Sunat"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Path-idSolicitud"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta de solicitud exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/SunatRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BaseRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ExtraRequest"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "Resultado": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/SunatResponse"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parámetros de solicitud no válidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRespuesta"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error Interno del Servidor  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRespuesta"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Error al invocación de recurso externo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRespuesta"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/placas/v1/solicitud": {
+      "post": {
+        "summary": "Crea solicitud",
+        "operationId": "crearSolicitudPlacas",
+        "tags": [
+          "Placas"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "\n",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlacaRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Generación de solicitud exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/PlacaRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BaseRequest"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parámetros de solicitud no válidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRespuesta"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error Interno del Servidor  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRespuesta"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Error al invocación de recurso externo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRespuesta"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/placas/v1/solicitud/{idSolicitud}": {
+      "get": {
+        "summary": "Obtiene resultado",
+        "operationId": "obtenerSolicitudPlacas",
+        "tags": [
+          "Placas"
+        ],
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "description": "\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/Path-idSolicitud"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Consulta de solicitud exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/components/schemas/PlacaRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/BaseRequest"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ExtraRequest"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "Resultado": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/PlacaResponse"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Parámetros de solicitud no válidos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRespuesta"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error Interno del Servidor  ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRespuesta"
+                }
+              }
+            }
+          },
+          "502": {
+            "description": "Error al invocación de recurso externo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorRespuesta"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "components": {
+    "parameters": {
+      "Path-idSolicitud": {
+        "in": "path",
+        "name": "idSolicitud",
+        "schema": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "required": true,
+        "description": "Valor único para identificar la solicitud.",
+        "example": "4ca65b3a-56c6-4ca6-8b6f-c3fe6bfb986a"
+      }
+    },
+    "schemas": {
+      "CaptchaRequest": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "04B",
+            "enum": [
+              "02A",
+              "03A",
+              "04A",
+              "05A",
+              "06A",
+              "07A",
+              "08A",
+              "09A",
+              "10A",
+              "11A",
+              "01B",
+              "02B",
+              "03B",
+              "04B"
+            ]
+          },
+          "image": {
+            "type": "string",
+            "example": "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"
+          }
+        },
+        "required": [
+          "code",
+          "image"
+        ]
+      },
+      "CaptchaResponse": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "06A",
+            "enum": [
+              "02A",
+              "03A",
+              "04A",
+              "05A",
+              "06A",
+              "07A",
+              "08A",
+              "09A",
+              "10A",
+              "11A",
+              "01B",
+              "02B",
+              "03B",
+              "04B"
+            ]
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Successful",
+              "Failed"
+            ],
+            "example": "Successful"
+          },
+          "text": {
+            "type": "string",
+            "example": "RDTP"
+          }
+        }
+      },
+      "BaseRequest": {
+        "type": "object",
+        "properties": {
+          "IdSolicitud": {
+            "type": "string",
+            "format": "uuid",
+            "example": "4ca65b3a-56c6-4ca6-8b6f-c3fe6bfb986a"
+          },
+          "Estado": {
+            "type": "string",
+            "enum": [
+              "Pending",
+              "Completed",
+              "Failed"
+            ],
+            "example": "Completed"
+          },
+          "FechaCreacion": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-03-14T20:36:48.000Z"
+          }
+        }
+      },
+      "ExtraRequest": {
+        "type": "object",
+        "properties": {
+          "FechaModificacion": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2025-03-14T20:36:55.000Z"
+          },
+          "ErrorDescription": {
+            "type": "string",
+            "example": ""
+          }
+        }
+      },
+      "SuneduRequest": {
+        "type": "object",
+        "properties": {
+          "DNI": {
+            "type": "string",
+            "example": "45454545"
+          }
+        },
+        "required": [
+          "DNI"
+        ]
+      },
+      "SuneduResponse": {
+        "type": "object",
+        "properties": {
+          "FechaDiploma": {
+            "type": "string",
+            "format": "date",
+            "example": "16/04/2012"
+          },
+          "Ubicacion": {
+            "type": "string",
+            "example": "PERU"
+          },
+          "NombreGraduado": {
+            "type": "string",
+            "example": "PEREZ QUISPE, JUAN"
+          },
+          "FechaEgreso": {
+            "type": "string",
+            "example": "16/04/2012"
+          },
+          "ModalidadEstudio": {
+            "type": "string",
+            "example": "-"
+          },
+          "Institucion": {
+            "type": "string",
+            "example": "UNIVERSIDAD NACIONAL DEL ORIENTE DE AMERICA"
+          },
+          "Tipo": {
+            "type": "string",
+            "example": ""
+          },
+          "GradoTitulo": {
+            "type": "string",
+            "example": "LICENCIADA EN PSICOLOGIA"
+          },
+          "DuracionEstudio": {
+            "type": "string",
+            "example": ""
+          },
+          "FechaReconocimiento": {
+            "type": "string",
+            "example": ""
+          },
+          "DocumentoGraduado": {
+            "type": "string",
+            "example": "DNI 45454545"
+          },
+          "FechaMatricula": {
+            "type": "string",
+            "example": "16/04/2012"
+          }
+        }
+      },
+      "SunatRequest": {
+        "type": "object",
+        "properties": {
+          "RUC": {
+            "type": "string",
+            "example": "10455710915"
+          }
+        },
+        "required": [
+          "RUC"
+        ]
+      },
+      "SunatResponse": {
+        "type": "object",
+        "properties": {
+          "Sistema Contabilidad": {
+            "type": "string",
+            "example": "COMPUTARIZADO"
+          },
+          "Sistema de Emisión Electrónica": {
+            "type": "string",
+            "example": "RECIBOS POR HONORARIOS"
+          },
+          "Número de RUC": {
+            "type": "string",
+            "example": "10123456785 - JUAN PEREZ"
+          },
+          "Tipo de Documento": {
+            "type": "string",
+            "example": "DNI 12345678 - JUAN PEREZ"
+          },
+          "Sistema Emisión de Comprobante": {
+            "type": "string",
+            "example": "COMPUTARIZADO"
+          },
+          "Comprobantes Electrónicos": {
+            "type": "string",
+            "example": "RECIBO POR HONORARIO"
+          },
+          "Fecha de Inscripción": {
+            "type": "string",
+            "example": "17/11/2018"
+          },
+          "Fecha de Inicio de Actividades": {
+            "type": "string",
+            "example": "17/11/2018"
+          },
+          "Nombre Comercial": {
+            "type": "string",
+            "example": "-"
+          },
+          "Padrones": {
+            "type": "string",
+            "example": "NINGUNO"
+          },
+          "Tipo Contribuyente": {
+            "type": "string",
+            "example": "PERSONA NATURAL SIN NEGOCIO"
+          },
+          "Comprobantes de Pago...": {
+            "type": "string",
+            "example": "RECIBO POR HONORARIOS"
+          },
+          "Emisor electrónico desde": {
+            "type": "string",
+            "example": "31/12/2019"
+          },
+          "Condición del Contribuyente": {
+            "type": "string",
+            "example": "HABIDO"
+          },
+          "Actividad(es) Económica(s)": {
+            "type": "string",
+            "example": "Principal - 9609 - OTRAS ACTIVIDADES"
+          },
+          "Afiliado al PLE desde": {
+            "type": "string",
+            "example": "-"
+          },
+          "Actividad Comercio Exterior": {
+            "type": "string",
+            "example": "SIN ACTIVIDAD"
+          },
+          "Domicilio Fiscal": {
+            "type": "string",
+            "example": "-"
+          },
+          "Estado del Contribuyente": {
+            "type": "string",
+            "example": "ACTIVO"
+          }
+        }
+      },
+      "PlacaRequest": {
+        "type": "object",
+        "properties": {
+          "PLACA": {
+            "type": "string",
+            "example": "BFY477"
+          }
+        },
+        "required": [
+          "PLACA"
+        ]
+      },
+      "PlacaResponse": {
+        "type": "object",
+        "properties": {
+          "PlacaNueva": {
+            "type": "string",
+            "example": "BFY470"
+          },
+          "PlacaAnterior": {
+            "type": "string",
+            "example": "BFY470"
+          },
+          "Estado": {
+            "type": "string",
+            "example": "Entregado a cliente"
+          },
+          "PuntoEntrega": {
+            "type": "string",
+            "example": "ASOCIACIÓN AUTOMOTRIZ DEL PERÚ - LIMA"
+          },
+          "FechaInicio": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2018-12-14T17:58:21.000Z"
+          },
+          "FechaEntrega": {
+            "type": "string",
+            "format": "date-time",
+            "example": "2018-12-17T16:19:58.000Z"
+          },
+          "NumeroSerie": {
+            "type": "string",
+            "example": "3N1CN7AD4KK391435"
+          },
+          "Marca": {
+            "type": "string",
+            "example": "NISSAN"
+          },
+          "Modelo": {
+            "type": "string",
+            "example": "VERSA"
+          },
+          "Propietario": {
+            "type": "string",
+            "example": "JUAN PEREZ"
+          },
+          "TipoUso": {
+            "type": "string",
+            "example": "Vehiculos Particulares ( Categoria M )"
+          },
+          "TipoSolicitud": {
+            "type": "string",
+            "example": "INMATRICULACION"
+          }
+        }
+      },
+      "ErrorRespuesta": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "object",
+            "properties": {
+              "codigo": {
+                "type": "string",
+                "example": "ERR-002"
+              },
+              "mensaje": {
+                "type": "string",
+                "example": "Error al procesar la solicitud."
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api-key"
+      }
+    }
+  }
+}
